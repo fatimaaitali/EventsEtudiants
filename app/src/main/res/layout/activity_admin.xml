@@ -56,20 +56,42 @@
             android:layout_height="wrap_content"
             android:hint="Description"/>
 
-        <ImageView
-            android:id="@+id/imgEvent"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@mipmap/ic_launcher"
-            android:layout_gravity="center"/>
+
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:id="@+id/imgEvent"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@mipmap/ic_launcher"
+                android:scaleType="centerCrop"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/image_border_event"
+                android:padding="5dp" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:gravity="center"
+                android:text="📷\nAjouter photo"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:background="#99000000" />
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
             android:gravity="center"
-            android:layout_marginTop="12dp"
-            >
+            android:layout_marginTop="12dp">
 
             <Button
                 android:id="@+id/btnAddEvent"
@@ -106,7 +128,7 @@
             android:id="@+id/btnViewEvents"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Voir les Événements "
+            android:text="Voir les Événements"
             android:layout_marginTop="10dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
@@ -132,12 +154,35 @@
             android:layout_height="wrap_content"
             android:hint="Nom Club"/>
 
-        <ImageView
-            android:id="@+id/imgClub"
-            android:layout_width="120dp"
-            android:layout_height="120dp"
-            android:src="@mipmap/ic_launcher"
-            android:layout_gravity="center"/>
+        <!-- Image avec texte superposé pour Club -->
+        <FrameLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp">
+
+            <ImageView
+                android:id="@+id/imgClub"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:src="@mipmap/ic_launcher"
+                android:scaleType="centerCrop"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="@drawable/image_border_club"
+                android:padding="5dp" />
+
+            <TextView
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:gravity="center"
+                android:text="📷\nAjouter logo"
+                android:textColor="#FFFFFF"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:background="#99000000" />
+
+        </FrameLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -153,10 +198,8 @@
                 android:layout_weight="1"
                 android:text="Ajouter"
                 android:textSize="14sp"
-
                 android:padding="8dp"
-                android:layout_margin="4dp"
-                />
+                android:layout_margin="4dp"/>
 
             <Button
                 android:id="@+id/btnUpdateClub"
@@ -165,11 +208,8 @@
                 android:layout_weight="1"
                 android:text="Modifier"
                 android:textSize="14sp"
-
-
                 android:padding="8dp"
-                android:layout_margin="4dp"
-                />
+                android:layout_margin="4dp"/>
 
             <Button
                 android:id="@+id/btnClearClub"
@@ -186,7 +226,7 @@
             android:id="@+id/btnViewClubs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Voir  les Clubs"
+            android:text="Voir les Clubs"
             android:layout_marginTop="10dp"/>
 
         <androidx.recyclerview.widget.RecyclerView
