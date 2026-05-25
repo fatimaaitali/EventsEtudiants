@@ -36,7 +36,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         ImageView image;
         TextView title, date, location;
         Button btn;
-        Button btnDelete;
+
 
         public ViewHolder(View view) {
             super(view);
@@ -45,7 +45,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             date = view.findViewById(R.id.eventDate);
             location = view.findViewById(R.id.eventLocation);
             btn = view.findViewById(R.id.btnParticiper);
-            btnDelete = view.findViewById(R.id.btnDelete);
+
         }
     }
 
@@ -107,13 +107,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         String email = sp.getString("email", "");
 
 
-        if (!role.equals("admin")) {
-            holder.btnDelete.setVisibility(View.GONE);
-            holder.btnDelete.setEnabled(false);
-        } else {
-            holder.btnDelete.setVisibility(View.VISIBLE);
-            holder.btnDelete.setEnabled(true);
-        }
+
 
         DatabaseHelper db = new DatabaseHelper(context);
         boolean participated = db.alreadyParticipated(email, e.getTitle());
@@ -139,11 +133,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         });
 
 
-        holder.btnDelete.setOnClickListener(v -> {
-            if (role.equals("admin") && listener != null) {
-                listener.onDeleteClick(e);
-            }
-        });
+
 
 
         holder.itemView.setOnClickListener(v -> {
