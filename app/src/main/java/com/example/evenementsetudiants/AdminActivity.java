@@ -19,14 +19,12 @@ import java.util.List;
 
 public class AdminActivity extends AppCompatActivity {
 
-
     EditText etTitle, etDate, etTime, etLocation, etDescription;
-    Button btnAddEvent, btnUpdateEvent, btnClearEvent, btnViewEvents;
+    Button btnAddEvent, btnUpdateEvent, btnDeleteEvent, btnViewEvents;
     ImageView imgEvent;
 
-
     EditText etClubName;
-    Button btnAddClub, btnUpdateClub, btnClearClub, btnViewClubs;
+    Button btnAddClub, btnUpdateClub, btnDeleteClub, btnViewClubs;
     ImageView imgClub;
 
     RecyclerView recyclerEvents, recyclerClubs;
@@ -56,7 +54,6 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-
         etTitle = findViewById(R.id.etTitle);
         etDate = findViewById(R.id.etDate);
         etTime = findViewById(R.id.etTime);
@@ -65,16 +62,15 @@ public class AdminActivity extends AppCompatActivity {
         imgEvent = findViewById(R.id.imgEvent);
         btnAddEvent = findViewById(R.id.btnAddEvent);
         btnUpdateEvent = findViewById(R.id.btnUpdateEvent);
-        btnClearEvent = findViewById(R.id.btnClearEvent);
+        btnDeleteEvent = findViewById(R.id.btnDeleteEvent);
         btnViewEvents = findViewById(R.id.btnViewEvents);
         recyclerEvents = findViewById(R.id.recyclerEvents);
-
 
         etClubName = findViewById(R.id.etClubName);
         imgClub = findViewById(R.id.imgClub);
         btnAddClub = findViewById(R.id.btnAddClub);
         btnUpdateClub = findViewById(R.id.btnUpdateClub);
-        btnClearClub = findViewById(R.id.btnClearClub);
+        btnDeleteClub = findViewById(R.id.btnDeleteClub);
         btnViewClubs = findViewById(R.id.btnViewClubs);
         recyclerClubs = findViewById(R.id.recyclerClubs);
     }
@@ -86,24 +82,19 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     private void setupClickListeners() {
-
         btnAddEvent.setOnClickListener(v -> addEvent());
         btnUpdateEvent.setOnClickListener(v -> updateEvent());
-        btnClearEvent.setOnClickListener(v -> clearEventForm());
+        btnDeleteEvent.setOnClickListener(v -> deleteSelectedEvent());
         btnViewEvents.setOnClickListener(v -> toggleEventList());
-
 
         btnAddClub.setOnClickListener(v -> addClub());
         btnUpdateClub.setOnClickListener(v -> updateClub());
-        btnClearClub.setOnClickListener(v -> clearClubForm());
+        btnDeleteClub.setOnClickListener(v -> deleteSelectedClub());
         btnViewClubs.setOnClickListener(v -> toggleClubList());
-
 
         imgEvent.setOnClickListener(v -> pickImage(PICK_EVENT_IMAGE));
         imgClub.setOnClickListener(v -> pickImage(PICK_CLUB_IMAGE));
     }
-
-
 
     private void addEvent() {
         String title = etTitle.getText().toString().trim();
@@ -126,7 +117,7 @@ public class AdminActivity extends AppCompatActivity {
                 description.isEmpty() ? "Aucune description" : description,
                 eventImageUri);
 
-        Toast.makeText(this, "Event ajouté ✅", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Événement ajouté ✅", Toast.LENGTH_SHORT).show();
         clearEventForm();
         loadEventList();
     }
@@ -148,10 +139,8 @@ public class AdminActivity extends AppCompatActivity {
             return;
         }
 
-
         String imageToSave = eventImageUri;
         if (imageToSave == null || imageToSave.isEmpty()) {
-
             Cursor cursor = db.getAllEvents();
             if (cursor != null) {
                 while (cursor.moveToNext()) {
@@ -168,7 +157,6 @@ public class AdminActivity extends AppCompatActivity {
             imageToSave = "android.resource://" + getPackageName() + "/" + R.drawable.conference_ai;
         }
 
-
         android.database.sqlite.SQLiteDatabase sqldb = db.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("title", title);
@@ -181,21 +169,29 @@ public class AdminActivity extends AppCompatActivity {
         sqldb.update("events", values, "id=?", new String[]{String.valueOf(selectedEventId)});
         sqldb.close();
 
-        Toast.makeText(this, "Event modifié avec succès ✅", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Événement modifié avec succès ✅", Toast.LENGTH_SHORT).show();
         clearEventForm();
         loadEventList();
     }
 
-    private void deleteEvent(int eventId, String eventTitle) {
+    private void deleteSelectedEvent() {
+        if (selectedEventId == -1) {
+            Toast.makeText(this, "Sélectionnez d'abord un événement à supprimer", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String title = etTitle.getText().toString().trim();
+        if (title.isEmpty()) {
+            title = "cet événement";
+        }
+
         new AlertDialog.Builder(this)
                 .setTitle("Supprimer l'événement")
-                .setMessage("Voulez-vous vraiment supprimer \"" + eventTitle + "\" ?")
+                .setMessage("Voulez-vous vraiment supprimer \"" + title + "\" ?")
                 .setPositiveButton("Oui", (dialog, which) -> {
-                    db.deleteEvent(eventId);
-                    Toast.makeText(this, "Event supprimé ✅", Toast.LENGTH_SHORT).show();
-                    if (selectedEventId == eventId) {
-                        clearEventForm();
-                    }
+                    db.deleteEvent(selectedEventId);
+                    Toast.makeText(this, "Événement supprimé ✅", Toast.LENGTH_SHORT).show();
+                    clearEventForm();
                     loadEventList();
                 })
                 .setNegativeButton("Non", null)
@@ -205,6 +201,7 @@ public class AdminActivity extends AppCompatActivity {
     private void loadEventList() {
         Cursor cursor = db.getAllEvents();
         List<Event> events = convertEvents(cursor);
+        // Adapter sans icône de suppression
         eventAdapter = new EventAdapter(events, new EventAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Event event) {
@@ -213,7 +210,7 @@ public class AdminActivity extends AppCompatActivity {
 
             @Override
             public void onDeleteClick(Event event) {
-                deleteEvent(event.getId(), event.getTitle());
+                // Ne rien faire - suppression uniquement depuis le formulaire
             }
         });
         recyclerEvents.setAdapter(eventAdapter);
@@ -238,7 +235,7 @@ public class AdminActivity extends AppCompatActivity {
             imgEvent.setImageResource(R.drawable.conference_ai);
         }
 
-        Toast.makeText(this, "Modification de: " + event.getTitle(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Sélectionné: " + event.getTitle(), Toast.LENGTH_SHORT).show();
     }
 
     private void clearEventForm() {
@@ -251,8 +248,6 @@ public class AdminActivity extends AppCompatActivity {
         eventImageUri = "";
         imgEvent.setImageResource(R.drawable.conference_ai);
     }
-
-
 
     private void addClub() {
         String clubName = etClubName.getText().toString().trim();
@@ -286,10 +281,8 @@ public class AdminActivity extends AppCompatActivity {
             return;
         }
 
-
         String imageToSave = clubImageUri;
         if (imageToSave == null || imageToSave.isEmpty()) {
-
             Cursor cursor = db.getAllClubs();
             if (cursor != null) {
                 while (cursor.moveToNext()) {
@@ -313,16 +306,24 @@ public class AdminActivity extends AppCompatActivity {
         loadClubList();
     }
 
-    private void deleteClub(int clubId, String clubName) {
+    private void deleteSelectedClub() {
+        if (selectedClubId == -1) {
+            Toast.makeText(this, "Sélectionnez d'abord un club à supprimer", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        String clubName = etClubName.getText().toString().trim();
+        if (clubName.isEmpty()) {
+            clubName = "ce club";
+        }
+
         new AlertDialog.Builder(this)
                 .setTitle("Supprimer le club")
                 .setMessage("Voulez-vous vraiment supprimer le club \"" + clubName + "\" ?")
                 .setPositiveButton("Oui", (dialog, which) -> {
-                    db.deleteClub(clubId);
+                    db.deleteClub(selectedClubId);
                     Toast.makeText(this, "Club supprimé ✅", Toast.LENGTH_SHORT).show();
-                    if (selectedClubId == clubId) {
-                        clearClubForm();
-                    }
+                    clearClubForm();
                     loadClubList();
                 })
                 .setNegativeButton("Non", null)
@@ -332,6 +333,7 @@ public class AdminActivity extends AppCompatActivity {
     private void loadClubList() {
         Cursor cursor = db.getAllClubs();
         List<Club> clubs = convertClubs(cursor);
+        // Adapter sans icône de suppression
         clubAdapter = new ClubAdapter(clubs, new ClubAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Club club) {
@@ -340,7 +342,7 @@ public class AdminActivity extends AppCompatActivity {
 
             @Override
             public void onDeleteClick(Club club) {
-                deleteClub(club.getId(), club.getName());
+                // Ne rien faire - suppression uniquement depuis le formulaire
             }
         });
         recyclerClubs.setAdapter(clubAdapter);
@@ -361,7 +363,7 @@ public class AdminActivity extends AppCompatActivity {
             imgClub.setImageResource(R.drawable.robotique);
         }
 
-        Toast.makeText(this, "Modification de: " + club.getName(), Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Sélectionné: " + club.getName(), Toast.LENGTH_SHORT).show();
     }
 
     private void clearClubForm() {
@@ -370,8 +372,6 @@ public class AdminActivity extends AppCompatActivity {
         clubImageUri = "";
         imgClub.setImageResource(R.drawable.robotique);
     }
-
-
 
     private void toggleEventList() {
         if (recyclerEvents.getVisibility() == View.GONE) {
@@ -401,8 +401,6 @@ public class AdminActivity extends AppCompatActivity {
         intent.setType("image/*");
         startActivityForResult(intent, requestCode);
     }
-
-
 
     private List<Event> convertEvents(Cursor cursor) {
         List<Event> list = new ArrayList<>();

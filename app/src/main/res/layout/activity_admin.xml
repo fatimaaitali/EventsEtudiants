@@ -56,7 +56,6 @@
             android:layout_height="wrap_content"
             android:hint="Description"/>
 
-
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -114,14 +113,15 @@
                 android:layout_margin="4dp"/>
 
             <Button
-                android:id="@+id/btnClearEvent"
+                android:id="@+id/btnDeleteEvent"
                 android:layout_width="0dp"
                 android:layout_height="55dp"
                 android:layout_weight="1"
-                android:text="Effacer"
-                android:textSize="14sp"
+                android:text="Supprimer"
+                android:textSize="13sp"
                 android:padding="8dp"
-                android:layout_margin="4dp"/>
+                android:layout_margin="4dp"
+                android:backgroundTint="#F44336"/>
         </LinearLayout>
 
         <Button
@@ -139,7 +139,7 @@
             android:visibility="gone"
             android:layout_marginTop="10dp"/>
 
-        <!-- CLUB SECTION -->
+
         <TextView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -154,7 +154,6 @@
             android:layout_height="wrap_content"
             android:hint="Nom Club"/>
 
-        <!-- Image avec texte superposé pour Club -->
         <FrameLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -212,14 +211,15 @@
                 android:layout_margin="4dp"/>
 
             <Button
-                android:id="@+id/btnClearClub"
+                android:id="@+id/btnDeleteClub"
                 android:layout_width="0dp"
                 android:layout_height="55dp"
                 android:layout_weight="1"
-                android:text="Effacer"
-                android:textSize="14sp"
+                android:text="Supprimer"
+                android:textSize="13sp"
                 android:padding="8dp"
-                android:layout_margin="4dp"/>
+                android:layout_margin="4dp"
+                android:backgroundTint="#F44336"/>
         </LinearLayout>
 
         <Button
