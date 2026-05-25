@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- Photo -->
+
         <ImageView
             android:id="@+id/profileImage"
             android:layout_width="120dp"
@@ -18,7 +18,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"/>
 
-        <!-- Nom -->
+
         <TextView
             android:id="@+id/profileName"
             android:layout_width="wrap_content"
@@ -29,7 +29,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"/>
 
-        <!-- Filière -->
+
         <TextView
             android:id="@+id/profileFiliere"
             android:layout_width="wrap_content"
@@ -38,7 +38,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="5dp"/>
 
-        <!-- Activités -->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -51,7 +51,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <!-- Clubs -->
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -64,7 +64,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"/>
 
-        <!-- Logout -->
+
         <Button
             android:id="@+id/btnLogout"
             android:layout_width="match_parent"

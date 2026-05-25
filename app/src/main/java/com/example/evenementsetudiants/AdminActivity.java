@@ -19,12 +19,12 @@ import java.util.List;
 
 public class AdminActivity extends AppCompatActivity {
 
-    // Event fields
+
     EditText etTitle, etDate, etTime, etLocation, etDescription;
     Button btnAddEvent, btnUpdateEvent, btnClearEvent, btnViewEvents;
     ImageView imgEvent;
 
-    // Club fields
+
     EditText etClubName;
     Button btnAddClub, btnUpdateClub, btnClearClub, btnViewClubs;
     ImageView imgClub;
@@ -56,7 +56,7 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     private void initializeViews() {
-        // Event views
+
         etTitle = findViewById(R.id.etTitle);
         etDate = findViewById(R.id.etDate);
         etTime = findViewById(R.id.etTime);
@@ -69,7 +69,7 @@ public class AdminActivity extends AppCompatActivity {
         btnViewEvents = findViewById(R.id.btnViewEvents);
         recyclerEvents = findViewById(R.id.recyclerEvents);
 
-        // Club views
+
         etClubName = findViewById(R.id.etClubName);
         imgClub = findViewById(R.id.imgClub);
         btnAddClub = findViewById(R.id.btnAddClub);
@@ -86,24 +86,24 @@ public class AdminActivity extends AppCompatActivity {
     }
 
     private void setupClickListeners() {
-        // Event listeners
+
         btnAddEvent.setOnClickListener(v -> addEvent());
         btnUpdateEvent.setOnClickListener(v -> updateEvent());
         btnClearEvent.setOnClickListener(v -> clearEventForm());
         btnViewEvents.setOnClickListener(v -> toggleEventList());
 
-        // Club listeners
+
         btnAddClub.setOnClickListener(v -> addClub());
         btnUpdateClub.setOnClickListener(v -> updateClub());
         btnClearClub.setOnClickListener(v -> clearClubForm());
         btnViewClubs.setOnClickListener(v -> toggleClubList());
 
-        // Image pickers
+
         imgEvent.setOnClickListener(v -> pickImage(PICK_EVENT_IMAGE));
         imgClub.setOnClickListener(v -> pickImage(PICK_CLUB_IMAGE));
     }
 
-    // ==================== EVENT CRUD OPERATIONS ====================
+
 
     private void addEvent() {
         String title = etTitle.getText().toString().trim();
@@ -148,10 +148,10 @@ public class AdminActivity extends AppCompatActivity {
             return;
         }
 
-        // Préparer l'image (garder l'ancienne si aucune nouvelle n'est sélectionnée)
+
         String imageToSave = eventImageUri;
         if (imageToSave == null || imageToSave.isEmpty()) {
-            // Récupérer l'image existante depuis la base de données
+
             Cursor cursor = db.getAllEvents();
             if (cursor != null) {
                 while (cursor.moveToNext()) {
@@ -168,7 +168,7 @@ public class AdminActivity extends AppCompatActivity {
             imageToSave = "android.resource://" + getPackageName() + "/" + R.drawable.conference_ai;
         }
 
-        // Mettre à jour l'événement complet
+
         android.database.sqlite.SQLiteDatabase sqldb = db.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put("title", title);
@@ -252,7 +252,7 @@ public class AdminActivity extends AppCompatActivity {
         imgEvent.setImageResource(R.drawable.conference_ai);
     }
 
-    // ==================== CLUB CRUD OPERATIONS ====================
+
 
     private void addClub() {
         String clubName = etClubName.getText().toString().trim();
@@ -286,10 +286,10 @@ public class AdminActivity extends AppCompatActivity {
             return;
         }
 
-        // Préparer l'image (garder l'ancienne si aucune nouvelle n'est sélectionnée)
+
         String imageToSave = clubImageUri;
         if (imageToSave == null || imageToSave.isEmpty()) {
-            // Récupérer l'image existante depuis la base de données
+
             Cursor cursor = db.getAllClubs();
             if (cursor != null) {
                 while (cursor.moveToNext()) {
@@ -371,7 +371,7 @@ public class AdminActivity extends AppCompatActivity {
         imgClub.setImageResource(R.drawable.robotique);
     }
 
-    // ==================== UI HELPER METHODS ====================
+
 
     private void toggleEventList() {
         if (recyclerEvents.getVisibility() == View.GONE) {
@@ -402,7 +402,7 @@ public class AdminActivity extends AppCompatActivity {
         startActivityForResult(intent, requestCode);
     }
 
-    // ==================== DATA CONVERSION METHODS ====================
+
 
     private List<Event> convertEvents(Cursor cursor) {
         List<Event> list = new ArrayList<>();

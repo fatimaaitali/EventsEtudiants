@@ -23,13 +23,13 @@ public class EventDetailsActivity extends AppCompatActivity {
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-// مهم: نحيدو title الافتراضي باش ما يغطيش
+
         if (getSupportActionBar() != null) {
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
 
-// السهم يرجع
+
         toolbar.setNavigationOnClickListener(v -> finish());
 
         image = findViewById(R.id.eventImage);
@@ -50,7 +50,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         String lo = intent.getStringExtra("location");
         int img = intent.getIntExtra("image", 0);
 
-        // 🔵 Set data using string resources with placeholders
+
         title.setText(t);
         desc.setText(d);
         date.setText(getString(R.string.event_date_format, da));
@@ -58,7 +58,7 @@ public class EventDetailsActivity extends AppCompatActivity {
         location.setText(getString(R.string.event_location_format, lo));
         image.setImageResource(img);
 
-        // 🔵 Button click
+
         btnInscription.setOnClickListener(v -> Toast.makeText(this,
                 R.string.registration_success,
                 Toast.LENGTH_SHORT).show());

@@ -24,7 +24,7 @@ public class EventsFragment extends Fragment {
     ArrayList<Event> list;
     EventAdapter adapter;
     DatabaseHelper db;
-    String currentRole; // Ajouter cette variable
+    String currentRole;
 
     public EventsFragment() {
         super(R.layout.fragment_events);
@@ -35,21 +35,21 @@ public class EventsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         SharedPreferences sp = getContext().getSharedPreferences("user_session", Context.MODE_PRIVATE);
 
-        // FORCER l'écriture du rôle "user"
+
         sp.edit().putString("role", "user").apply();
 
         currentRole = sp.getString("role", "user");
         String email = sp.getString("email", "");
 
         Toast.makeText(getContext(), "Rôle forcé: " + currentRole, Toast.LENGTH_SHORT).show();
-        // ✅ Vérifier le rôle actuel
+
 
         recyclerView = view.findViewById(R.id.recyclerEvents);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         list = new ArrayList<>();
 
-        // ✅ Adapter avec OnItemClickListener
+
         adapter = new EventAdapter(list, new EventAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Event event) {

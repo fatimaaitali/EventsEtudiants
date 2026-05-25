@@ -65,13 +65,13 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         holder.date.setText(e.getDate());
         holder.location.setText(e.getLocation());
 
-        // ✅ Chargement correct des images URI
+
         Context context = holder.itemView.getContext();
         String imageUri = e.getImage();
 
         if (imageUri != null && !imageUri.isEmpty()) {
             try {
-                // Pour les URI android.resource://
+
                 if (imageUri.startsWith("android.resource://")) {
                     holder.image.setImageURI(Uri.parse(imageUri));
                 }
@@ -79,14 +79,14 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
                 else if (imageUri.startsWith("content://")) {
                     holder.image.setImageURI(Uri.parse(imageUri));
                 }
-                // Pour les chemins de fichiers
+
                 else if (imageUri.startsWith("/")) {
 
                     File file = new File(imageUri);
 
                     holder.image.setImageURI(Uri.fromFile(file));
                 }
-                // Pour les resource IDs en string
+
                 else if (imageUri.matches("\\d+")) {
                     int resId = Integer.parseInt(imageUri);
                     holder.image.setImageResource(resId);
@@ -106,7 +106,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         String role = sp.getString("role", "user");
         String email = sp.getString("email", "");
 
-        // Cacher le bouton delete pour les utilisateurs normaux
+
         if (!role.equals("admin")) {
             holder.btnDelete.setVisibility(View.GONE);
             holder.btnDelete.setEnabled(false);
@@ -126,7 +126,7 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             holder.btn.setEnabled(true);
         }
 
-        // Bouton Participer
+
         holder.btn.setOnClickListener(v -> {
             if (!db.alreadyParticipated(email, e.getTitle())) {
                 db.addParticipation(email, e.getTitle());
@@ -138,14 +138,14 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             }
         });
 
-        // Bouton Supprimer (seulement pour admin)
+
         holder.btnDelete.setOnClickListener(v -> {
             if (role.equals("admin") && listener != null) {
                 listener.onDeleteClick(e);
             }
         });
 
-        // Click sur l'item
+
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
                 listener.onItemClick(e);

@@ -69,7 +69,7 @@ public class AdminClubAdapter extends RecyclerView.Adapter<AdminClubAdapter.View
                     Toast.LENGTH_SHORT).show();
         });
 
-        // EDIT
+
         holder.btnEdit.setOnClickListener(v -> {
 
             Intent intent = new Intent(context, EditClubActivity.class);

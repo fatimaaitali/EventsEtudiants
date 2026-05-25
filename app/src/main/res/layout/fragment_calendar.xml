@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <!-- Title -->
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -14,14 +14,14 @@
         android:textStyle="bold"
         android:textColor="#1E3A8A"/>
 
-    <!-- Calendar -->
+
     <CalendarView
         android:id="@+id/calendarView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"/>
 
-    <!-- Events of selected date -->
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

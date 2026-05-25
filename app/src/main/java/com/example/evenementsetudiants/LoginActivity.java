@@ -23,16 +23,16 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        // Initialisation
+
         editEmail = findViewById(R.id.editEmail);
         editPassword = findViewById(R.id.editPassword);
         btnLogin = findViewById(R.id.btnLogin);
         registerLink = findViewById(R.id.registerLink);
 
-        // Database
+
         db = new DatabaseHelper(this);
 
-        // LOGIN
+
         btnLogin.setOnClickListener(v -> {
 
             String email = editEmail.getText().toString();
@@ -48,7 +48,7 @@ public class LoginActivity extends AppCompatActivity {
 
             } else {
 
-                // ✅ ADMIN LOGIN
+
                 if(email.equals("admin@gmail.com")
                         && password.equals("admin")) {
 
@@ -72,7 +72,7 @@ public class LoginActivity extends AppCompatActivity {
                     finish();
                 }
 
-                // ✅ USER LOGIN
+
                 else if (db.checkUser(email, password)) {
 
                     Toast.makeText(
@@ -81,7 +81,7 @@ public class LoginActivity extends AppCompatActivity {
                             Toast.LENGTH_SHORT
                     ).show();
 
-                    // SAVE SESSION
+
                     SharedPreferences sharedPreferences =
                             getSharedPreferences(
                                     "user_session",
@@ -93,12 +93,12 @@ public class LoginActivity extends AppCompatActivity {
 
                     editor.putBoolean("isLoggedIn", true);
                     editor.putString("role", "user");
-                    // email
+
                     editor.putString("email", email);
 
                     editor.apply();
 
-                    // GO MAIN
+
                     Intent intent = new Intent(
                             LoginActivity.this,
                             MainActivity.class
@@ -118,7 +118,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
 
-        // GO REGISTER
+
         registerLink.setOnClickListener(v -> {
 
             Intent intent = new Intent(

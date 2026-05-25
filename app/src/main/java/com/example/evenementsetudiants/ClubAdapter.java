@@ -20,13 +20,13 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
     private List<Club> clubList;
     private OnItemClickListener listener;
 
-    // Interface pour les clics admin
+
     public interface OnItemClickListener {
         void onItemClick(Club club);
         void onDeleteClick(Club club);
     }
 
-    // Constructeur pour AdminActivity (avec listener)
+
     public ClubAdapter(List<Club> clubList, OnItemClickListener listener) {
         this.clubList = clubList;
         this.listener = listener;
@@ -47,7 +47,7 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
 
         Context context = holder.itemView.getContext();
 
-        // Charger l'image correctement
+
         String imageUri = club.getImage();
         if (imageUri != null && !imageUri.isEmpty()) {
             try {
@@ -59,43 +59,43 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
                             .error(R.drawable.robotique)
                             .into(holder.imgClub);
                 } else {
-                    // Essayer de charger comme resource ID
+
                     int resId = Integer.parseInt(imageUri);
                     holder.imgClub.setImageResource(resId);
                 }
             } catch (Exception e) {
-                // Si erreur, utiliser image par défaut
+
                 holder.imgClub.setImageResource(R.drawable.robotique);
             }
         } else {
             holder.imgClub.setImageResource(R.drawable.robotique);
         }
 
-        // Vérifier le rôle de l'utilisateur
+
         SharedPreferences sp = context.getSharedPreferences("user_session", Context.MODE_PRIVATE);
         String role = sp.getString("role", "user");
 
-        // Pour Admin: afficher les boutons Modifier/Supprimer
+
         if (role.equals("admin")) {
             holder.btnEdit.setVisibility(View.VISIBLE);
             holder.btnDelete.setVisibility(View.VISIBLE);
             holder.btnJoin.setVisibility(View.GONE); // Cacher le bouton Rejoindre pour admin
 
-            // Bouton Modifier
+
             holder.btnEdit.setOnClickListener(v -> {
                 if (listener != null) {
                     listener.onItemClick(club);
                 }
             });
 
-            // Bouton Supprimer
+
             holder.btnDelete.setOnClickListener(v -> {
                 if (listener != null) {
                     listener.onDeleteClick(club);
                 }
             });
         } else {
-            // Pour utilisateur normal: afficher bouton Rejoindre/Quitter
+
             holder.btnEdit.setVisibility(View.GONE);
             holder.btnDelete.setVisibility(View.GONE);
             holder.btnJoin.setVisibility(View.VISIBLE);
@@ -118,7 +118,7 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
             });
         }
 
-        // Click sur l'item pour voir les détails
+
         holder.itemView.setOnClickListener(v -> {
             if (listener != null && role.equals("admin")) {
                 listener.onItemClick(club);
@@ -131,7 +131,7 @@ public class ClubAdapter extends RecyclerView.Adapter<ClubAdapter.ClubViewHolder
         return clubList.size();
     }
 
-    // Méthode pour mettre à jour la liste
+
     public void updateList(List<Club> newList) {
         this.clubList = newList;
         notifyDataSetChanged();

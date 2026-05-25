@@ -31,7 +31,7 @@ public class NotificationsActivity extends AppCompatActivity {
 
         recyclerView.setAdapter(adapter);
 
-        // 👇 Test data (Adding some samples if the list is empty)
+
         try (Cursor checkCursor = db.getNotifications()) {
             if (checkCursor == null || checkCursor.getCount() == 0) {
                 db.addNotification("Atelier informatique demain");

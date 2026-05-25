@@ -133,7 +133,7 @@ public class RegisterActivity extends AppCompatActivity {
             Uri selectedImage = data.getData();
 
             if (selectedImage != null) {
-                // Sauvegarder l'image dans le stockage interne
+
                 String imagePath = saveImageToInternalStorage(selectedImage);
 
                 if (imagePath != null) {

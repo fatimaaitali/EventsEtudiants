@@ -65,7 +65,7 @@ public class ProfileFragment extends Fragment {
 
         DatabaseHelper db = new DatabaseHelper(getContext());
 
-        // 🔵 Load user info
+
         if (!email.isEmpty()) {
 
             Cursor userCursor = db.getUser(email);
@@ -98,7 +98,7 @@ public class ProfileFragment extends Fragment {
                 userCursor.close();
             }
 
-            // 🔵 Load activities
+
             Cursor cursor = db.getUserActivities(email);
 
             if (cursor != null) {
@@ -113,7 +113,7 @@ public class ProfileFragment extends Fragment {
                 cursor.close();
             }
 
-            // 🔵 Adapter
+
             ActivityAdapter adapter =
                     new ActivityAdapter(getContext(), activitiesList, email);
 
@@ -145,7 +145,7 @@ public class ProfileFragment extends Fragment {
             recyclerViewClubs.setAdapter(clubAdapter);
         }
 
-        // 🔴 Logout
+
         btnLogout.setOnClickListener(v -> {
 
             SharedPreferences.Editor editor = sp.edit();

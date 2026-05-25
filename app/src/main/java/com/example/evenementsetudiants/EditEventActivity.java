@@ -32,7 +32,6 @@ public class EditEventActivity extends AppCompatActivity {
         editDescription = findViewById(R.id.editDescription);
         btnUpdate = findViewById(R.id.btnUpdate);
 
-        // 📥 get id from intent
         eventId = getIntent().getIntExtra("id", -1);
 
         loadEventData();

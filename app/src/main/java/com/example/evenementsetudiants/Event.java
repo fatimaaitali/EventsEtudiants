@@ -13,7 +13,7 @@ public class Event {
     public Event() {
     }
 
-    // Used for manual creation (e.g., in HomeFragment)
+
     public Event(int id, String title, String date,
                  String time,
                  String location,
@@ -29,7 +29,7 @@ public class Event {
         this.image = image;
     }
 
-    // Used for SQLite retrieval
+
     public Event(String title,
                  String date,
                  String time,

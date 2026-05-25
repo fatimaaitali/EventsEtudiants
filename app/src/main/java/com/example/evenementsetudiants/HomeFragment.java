@@ -34,14 +34,14 @@ public class HomeFragment extends Fragment {
         recyclerClubs.setLayoutManager(new GridLayoutManager(getContext(), 2));
         clubList = new ArrayList<>();
 
-        // ✅ ClubAdapter with click listener (without ClubDetailsActivity)
+
         clubAdapter = new ClubAdapter(clubList, new ClubAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Club club) {
-                // Show club info in a Toast
+
                 Toast.makeText(getContext(), "Club: " + club.getName(), Toast.LENGTH_SHORT).show();
 
-                // Show an AlertDialog with club info
+
                 new androidx.appcompat.app.AlertDialog.Builder(getContext())
                         .setTitle(club.getName())
                         .setMessage("Bienvenue au " + club.getName() + "!\n\n" +

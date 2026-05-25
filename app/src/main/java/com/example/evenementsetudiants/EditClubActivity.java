@@ -59,7 +59,7 @@ public class EditClubActivity extends AppCompatActivity {
                     "Club updated ✔",
                     Toast.LENGTH_SHORT).show();
 
-            finish(); // رجوع ل AdminClubsActivity
+            finish();
         });
     }
 

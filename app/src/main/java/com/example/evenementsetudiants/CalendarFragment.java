@@ -39,7 +39,7 @@ public class CalendarFragment extends Fragment {
         db = new DatabaseHelper(getContext());
         list = new ArrayList<>();
 
-        // ✅ Fix: Pass null as listener since CalendarFragment doesn't need admin actions
+
         adapter = new EventAdapter(list, new EventAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Event event) {
@@ -58,26 +58,25 @@ public class CalendarFragment extends Fragment {
 
             @Override
             public void onDeleteClick(Event event) {
-                // Calendar fragment doesn't need delete functionality
-                // You can either leave empty or show a message
+
                 Toast.makeText(getContext(), "Suppression non disponible ici", Toast.LENGTH_SHORT).show();
             }
         });
 
         recyclerView.setAdapter(adapter);
 
-        // 📅 Date selection
+
         calendarView.setOnDateChangeListener((view1, year, month, dayOfMonth) -> {
             String date = String.format("%04d-%02d-%02d",
                     year, month + 1, dayOfMonth);
             loadEventsByDate(date);
         });
 
-        // Load today's events by default
+
         loadEventsByDate(getTodayDate());
     }
 
-    // 🔵 Get today's date in YYYY-MM-DD format
+
     private String getTodayDate() {
         java.util.Calendar cal = java.util.Calendar.getInstance();
         return String.format("%04d-%02d-%02d",
@@ -86,7 +85,7 @@ public class CalendarFragment extends Fragment {
                 cal.get(java.util.Calendar.DAY_OF_MONTH));
     }
 
-    // 🔵 Fetch events by date and update RecyclerView
+
     private void loadEventsByDate(String date) {
         list.clear();
 

@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DatabaseHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "EventsDB";
-    private static final int DATABASE_VERSION = 7; // Incremented to trigger upgrade and create 'users' table
+    private static final int DATABASE_VERSION = 7;
 
     public static final String TABLE_EVENTS = "events";
     public static final String COLUMN_ID = "id";
@@ -86,7 +86,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-        // Drop all tables and recreate them to ensure the schema is correct
+
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_EVENTS);
         db.execSQL("DROP TABLE IF EXISTS users");
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_NOTIFICATIONS);
@@ -160,7 +160,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.close();
     }
-    // 🔵 GET USER BY EMAIL
+
     public Cursor getUser(String email) {
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -444,11 +444,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.close();
     }
-    // ================= CLUBS TABLE =================
 
-
-
-    // ADD CLUB
     public void addClubData(String name, String image) {
 
         SQLiteDatabase db = this.getWritableDatabase();
@@ -461,13 +457,13 @@ public class DatabaseHelper extends SQLiteOpenHelper {
                 "clubs",
                 null,
                 values,
-                SQLiteDatabase.CONFLICT_IGNORE // 👈 يمنع التكرار
+                SQLiteDatabase.CONFLICT_IGNORE
         );
 
         db.close();
     }
 
-    // GET CLUBS
+
     public Cursor getAllClubs() {
 
         SQLiteDatabase db = this.getReadableDatabase();
@@ -478,7 +474,7 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         );
     }
 
-    // DELETE CLUB
+
     public void deleteClub(int id) {
 
         SQLiteDatabase db = this.getWritableDatabase();

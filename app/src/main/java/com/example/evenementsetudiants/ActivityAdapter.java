@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.List;
 
-public class ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHolder> {
+public class  ActivityAdapter extends RecyclerView.Adapter<ActivityAdapter.ViewHolder> {
 
     private List<ActivityModel> list;
     private Context context;

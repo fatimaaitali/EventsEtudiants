@@ -45,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
                 loadFragment(profileFragment);
             }
 
-            return true; // مهم
+            return true;
         });
 
     }
