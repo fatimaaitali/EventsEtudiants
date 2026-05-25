@@ -70,7 +70,7 @@ public class EventsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         db = new DatabaseHelper(getContext());
-        db.fixAllEventImages(getContext());
+
 
         Cursor c = db.getAllEvents();
 
