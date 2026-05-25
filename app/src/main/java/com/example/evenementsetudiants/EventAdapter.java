@@ -13,6 +13,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.bumptech.glide.Glide;
 
 import java.io.File;
 import java.util.List;
@@ -37,7 +38,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         TextView title, date, location;
         Button btn;
 
-
         public ViewHolder(View view) {
             super(view);
             image = view.findViewById(R.id.eventImage);
@@ -45,7 +45,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             date = view.findViewById(R.id.eventDate);
             location = view.findViewById(R.id.eventLocation);
             btn = view.findViewById(R.id.btnParticiper);
-
         }
     }
 
@@ -65,49 +64,15 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
         holder.date.setText(e.getDate());
         holder.location.setText(e.getLocation());
 
-
+        // Chargement de l'image avec Glide
         Context context = holder.itemView.getContext();
         String imageUri = e.getImage();
 
-        if (imageUri != null && !imageUri.isEmpty()) {
-            try {
-
-                if (imageUri.startsWith("android.resource://")) {
-                    holder.image.setImageURI(Uri.parse(imageUri));
-                }
-                // Pour les URI content://
-                else if (imageUri.startsWith("content://")) {
-                    holder.image.setImageURI(Uri.parse(imageUri));
-                }
-
-                else if (imageUri.startsWith("/")) {
-
-                    File file = new File(imageUri);
-
-                    holder.image.setImageURI(Uri.fromFile(file));
-                }
-
-                else if (imageUri.matches("\\d+")) {
-                    int resId = Integer.parseInt(imageUri);
-                    holder.image.setImageResource(resId);
-                }
-                else {
-                    holder.image.setImageURI(Uri.parse(imageUri));
-                }
-            } catch (Exception ex) {
-                holder.image.setImageResource(R.drawable.conference_ai);
-            }
-        } else {
-            holder.image.setImageResource(R.drawable.conference_ai);
-        }
+        loadEventImage(context, imageUri, holder.image);
 
         SharedPreferences sp = context.getSharedPreferences("user_session", Context.MODE_PRIVATE);
-
         String role = sp.getString("role", "user");
         String email = sp.getString("email", "");
-
-
-
 
         DatabaseHelper db = new DatabaseHelper(context);
         boolean participated = db.alreadyParticipated(email, e.getTitle());
@@ -120,7 +85,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
             holder.btn.setEnabled(true);
         }
 
-
         holder.btn.setOnClickListener(v -> {
             if (!db.alreadyParticipated(email, e.getTitle())) {
                 db.addParticipation(email, e.getTitle());
@@ -131,10 +95,6 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
                 Toast.makeText(context, "Déjà inscrit ❗", Toast.LENGTH_SHORT).show();
             }
         });
-
-
-
-
 
         holder.itemView.setOnClickListener(v -> {
             if (listener != null) {
@@ -150,6 +110,50 @@ public class EventAdapter extends RecyclerView.Adapter<EventAdapter.ViewHolder> 
                 context.startActivity(intent);
             }
         });
+    }
+
+    private void loadEventImage(Context context, String imageUri, ImageView imageView) {
+        if (imageUri != null && !imageUri.isEmpty()) {
+            try {
+                // Utiliser Glide pour charger l'image
+                if (imageUri.startsWith("android.resource://") ||
+                        imageUri.startsWith("content://") ||
+                        imageUri.startsWith("file://")) {
+
+                    Glide.with(context)
+                            .load(Uri.parse(imageUri))
+                            .placeholder(R.drawable.conference_ai)
+                            .error(R.drawable.conference_ai)
+                            .into(imageView);
+                }
+                // Si c'est un chemin de fichier
+                else if (imageUri.startsWith("/")) {
+                    Glide.with(context)
+                            .load(new File(imageUri))
+                            .placeholder(R.drawable.conference_ai)
+                            .error(R.drawable.conference_ai)
+                            .into(imageView);
+                }
+                // Si c'est un ID de ressource
+                else if (imageUri.matches("\\d+")) {
+                    int resId = Integer.parseInt(imageUri);
+                    imageView.setImageResource(resId);
+                }
+                // Sinon, essayer directement
+                else {
+                    Glide.with(context)
+                            .load(imageUri)
+                            .placeholder(R.drawable.conference_ai)
+                            .error(R.drawable.conference_ai)
+                            .into(imageView);
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                imageView.setImageResource(R.drawable.conference_ai);
+            }
+        } else {
+            imageView.setImageResource(R.drawable.conference_ai);
+        }
     }
 
     @Override

@@ -30,18 +30,12 @@ public class HomeFragment extends Fragment {
 
         recyclerClubs = view.findViewById(R.id.recyclerClubs);
         recyclerClubs.setLayoutManager(new GridLayoutManager(getContext(), 2));
-        recyclerClubs = view.findViewById(R.id.recyclerClubs);
-        recyclerClubs.setLayoutManager(new GridLayoutManager(getContext(), 2));
         clubList = new ArrayList<>();
-
 
         clubAdapter = new ClubAdapter(clubList, new ClubAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Club club) {
-
                 Toast.makeText(getContext(), "Club: " + club.getName(), Toast.LENGTH_SHORT).show();
-
-
                 new androidx.appcompat.app.AlertDialog.Builder(getContext())
                         .setTitle(club.getName())
                         .setMessage("Bienvenue au " + club.getName() + "!\n\n" +
@@ -52,7 +46,6 @@ public class HomeFragment extends Fragment {
 
             @Override
             public void onDeleteClick(Club club) {
-                // Users cannot delete clubs, only admin
                 Toast.makeText(getContext(), "Vous n'avez pas les droits pour supprimer", Toast.LENGTH_SHORT).show();
             }
         });
@@ -60,19 +53,23 @@ public class HomeFragment extends Fragment {
         recyclerClubs.setAdapter(clubAdapter);
         db = new DatabaseHelper(getContext());
 
+        // TEMPORAIRE: Vider les anciens clubs pour les recréer avec le bon format
+        db.clearAllClubs();  // <--- AJOUTEZ CETTE LIGNE TEMPORAIREMENT
+
         // Add default clubs if database is empty
         Cursor c = db.getAllClubs();
 
         if (c.getCount() == 0) {
-            db.addClubData("Club Robotique", String.valueOf(R.drawable.robotique));
-            db.addClubData("Club Musique", String.valueOf(R.drawable.musique));
-            db.addClubData("Club Sport", String.valueOf(R.drawable.sport));
-            db.addClubData("Club Théâtre", String.valueOf(R.drawable.conference_ai));
-            db.addClubData("Club Développement Web", String.valueOf(R.drawable.devweb));
-            db.addClubData("Club IA", String.valueOf(R.drawable.ai));
-            db.addClubData("Club Entrepreneuriat", String.valueOf(R.drawable.entrepr));
-            db.addClubData("Club Design", String.valueOf(R.drawable.design));
-            db.addClubData("Club Photographie", String.valueOf(R.drawable.photographe));
+            // CORRECTION: Utiliser un URI valide
+            db.addClubData("Club Robotique", "android.resource://" + getContext().getPackageName() + "/" + R.drawable.robotique);
+            db.addClubData("Club Musique", "android.resource://" + getContext().getPackageName() + "/" + R.drawable.musique);
+            db.addClubData("Club Sport", "android.resource://" + getContext().getPackageName() + "/" + R.drawable.sport);
+            db.addClubData("Club Théâtre", "android.resource://" + getContext().getPackageName() + "/" + R.drawable.conference_ai);
+            db.addClubData("Club Développement Web", "android.resource://" + getContext().getPackageName() + "/" + R.drawable.devweb);
+            db.addClubData("Club IA", "android.resource://" + getContext().getPackageName() + "/" + R.drawable.ai);
+            db.addClubData("Club Entreprenariat", "android.resource://" + getContext().getPackageName() + "/" + R.drawable.entrepr);
+            db.addClubData("Club Design", "android.resource://" + getContext().getPackageName() + "/" + R.drawable.design);
+            db.addClubData("Club Photographie", "android.resource://" + getContext().getPackageName() + "/" + R.drawable.photographe);
         }
 
         c.close();

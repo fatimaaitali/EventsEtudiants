@@ -35,25 +35,20 @@ public class EventsFragment extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         SharedPreferences sp = getContext().getSharedPreferences("user_session", Context.MODE_PRIVATE);
 
-
         sp.edit().putString("role", "user").apply();
-
         currentRole = sp.getString("role", "user");
         String email = sp.getString("email", "");
 
         Toast.makeText(getContext(), "Rôle forcé: " + currentRole, Toast.LENGTH_SHORT).show();
-
 
         recyclerView = view.findViewById(R.id.recyclerEvents);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         list = new ArrayList<>();
 
-
         adapter = new EventAdapter(list, new EventAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(Event event) {
-                // Open event details when clicked
                 if (getContext() != null) {
                     Intent intent = new Intent(getContext(), EventDetailsActivity.class);
                     intent.putExtra("title", event.getTitle());
@@ -68,7 +63,6 @@ public class EventsFragment extends Fragment {
 
             @Override
             public void onDeleteClick(Event event) {
-                // Users cannot delete events, only admin
                 Toast.makeText(getContext(), "Vous n'avez pas les droits pour supprimer", Toast.LENGTH_SHORT).show();
             }
         });
@@ -76,8 +70,8 @@ public class EventsFragment extends Fragment {
         recyclerView.setAdapter(adapter);
 
         db = new DatabaseHelper(getContext());
+        db.fixAllEventImages(getContext());
 
-        // Insert default events if database is empty
         Cursor c = db.getAllEvents();
 
         if (c.getCount() == 0) {
@@ -130,7 +124,6 @@ public class EventsFragment extends Fragment {
         }
 
         c.close();
-
         loadData();
     }
 

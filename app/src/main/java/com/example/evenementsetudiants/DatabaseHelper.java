@@ -519,5 +519,51 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
         db.close();
     }
+    public void clearAllClubs() {
+        SQLiteDatabase db = this.getWritableDatabase();
+        db.execSQL("DELETE FROM clubs");
+        db.close();
+    }
 
+
+    public void fixAllEventImages(Context context) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        String packageName = context.getPackageName();
+
+
+        Cursor cursor = db.rawQuery("SELECT id, title, image FROM events", null);
+
+        if (cursor != null && cursor.moveToFirst()) {
+            do {
+                int id = cursor.getInt(0);
+                String title = cursor.getString(1);
+                String currentImage = cursor.getString(2);
+
+                // Vérifier si l'image est au mauvais format
+                if (currentImage != null && !currentImage.startsWith("android.resource://")) {
+                    // Déterminer quel drawable utiliser en fonction du titre
+                    int drawableId = getDrawableForEvent(title);
+                    if (drawableId != 0) {
+                        String correctUri = "android.resource://" + packageName + "/" + drawableId;
+                        ContentValues values = new ContentValues();
+                        values.put("image", correctUri);
+                        db.update("events", values, "id=?", new String[]{String.valueOf(id)});
+                        android.util.Log.d("DatabaseHelper", "Image corrigée pour: " + title);
+                    }
+                }
+            } while (cursor.moveToNext());
+            cursor.close();
+        }
+        db.close();
+    }
+
+    // Méthode helper pour mapper les titres aux drawables
+    private int getDrawableForEvent(String title) {
+        if (title.contains("Conférence IA")) return R.drawable.conference_ai;
+        if (title.contains("Forum Entreprises")) return R.drawable.forum_entreprise;
+        if (title.contains("Atelier Java")) return R.drawable.atelier_java_android;
+        if (title.contains("Journée Sportive")) return R.drawable.journee_sport;
+        if (title.contains("Pièce de théâtre")) return R.drawable.piece_theatre;
+        return R.drawable.conference_ai; // Image par défaut
+    }
 }
