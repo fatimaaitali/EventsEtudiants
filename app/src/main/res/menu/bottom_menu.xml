@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/nav_home"
+        android:title="Clubs"
+        android:icon="@android:drawable/ic_menu_view"/>
+
+    <item
+        android:id="@+id/nav_events"
+        android:title="Événements"
+        android:icon="@android:drawable/ic_menu_agenda"/>
+
+    <item
+        android:id="@+id/nav_calendar"
+        android:title="Calendrier"
+        android:icon="@android:drawable/ic_menu_my_calendar"/>
+
+    <item
+        android:id="@+id/nav_profile"
+        android:title="Profil"
+        android:icon="@android:drawable/ic_menu_myplaces"/>
+
+</menu>

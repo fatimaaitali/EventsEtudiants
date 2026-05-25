@@ -1,0 +1,201 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- TITLE -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ADMIN PANEL"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="20dp"/>
+
+        <!-- EVENT SECTION -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ajouter/Modifier Événement"
+            android:textStyle="bold"
+            android:textSize="18sp"/>
+
+        <EditText
+            android:id="@+id/etTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Titre Événement"/>
+
+        <EditText
+            android:id="@+id/etDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Date (YYYY-MM-DD)"/>
+
+        <EditText
+            android:id="@+id/etTime"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Heure"/>
+
+        <EditText
+            android:id="@+id/etLocation"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Lieu"/>
+
+        <EditText
+            android:id="@+id/etDescription"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Description"/>
+
+        <ImageView
+            android:id="@+id/imgEvent"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_gravity="center"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="12dp"
+            >
+
+            <Button
+                android:id="@+id/btnAddEvent"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_weight="1"
+                android:text="Ajouter"
+                android:textSize="14sp"
+                android:padding="8dp"
+                android:layout_margin="4dp"/>
+
+            <Button
+                android:id="@+id/btnUpdateEvent"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_weight="1"
+                android:text="Modifier"
+                android:textSize="14sp"
+                android:padding="8dp"
+                android:layout_margin="4dp"/>
+
+            <Button
+                android:id="@+id/btnClearEvent"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_weight="1"
+                android:text="Effacer"
+                android:textSize="14sp"
+                android:padding="8dp"
+                android:layout_margin="4dp"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnViewEvents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Voir les Événements "
+            android:layout_marginTop="10dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerEvents"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:visibility="gone"
+            android:layout_marginTop="10dp"/>
+
+        <!-- CLUB SECTION -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ajouter/Modifier Club"
+            android:textStyle="bold"
+            android:textSize="18sp"
+            android:layout_marginTop="30dp"/>
+
+        <EditText
+            android:id="@+id/etClubName"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Nom Club"/>
+
+        <ImageView
+            android:id="@+id/imgClub"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@mipmap/ic_launcher"
+            android:layout_gravity="center"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:gravity="center"
+            android:layout_marginTop="12dp">
+
+            <Button
+                android:id="@+id/btnAddClub"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_weight="1"
+                android:text="Ajouter"
+                android:textSize="14sp"
+
+                android:padding="8dp"
+                android:layout_margin="4dp"
+                />
+
+            <Button
+                android:id="@+id/btnUpdateClub"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_weight="1"
+                android:text="Modifier"
+                android:textSize="14sp"
+
+
+                android:padding="8dp"
+                android:layout_margin="4dp"
+                />
+
+            <Button
+                android:id="@+id/btnClearClub"
+                android:layout_width="0dp"
+                android:layout_height="55dp"
+                android:layout_weight="1"
+                android:text="Effacer"
+                android:textSize="14sp"
+                android:padding="8dp"
+                android:layout_margin="4dp"/>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/btnViewClubs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Voir  les Clubs"
+            android:layout_marginTop="10dp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerClubs"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:nestedScrollingEnabled="false"
+            android:visibility="gone"
+            android:layout_marginTop="10dp"/>
+
+    </LinearLayout>
+</ScrollView>
